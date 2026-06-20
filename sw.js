@@ -3,7 +3,7 @@
 //  - HTML / navigation  -> NETWORK-FIRST  (latest UI when online; cached shell offline)
 //  - feed / data JSON   -> NETWORK-FIRST  (fresh data, cached fallback)
 //  - static assets      -> CACHE-FIRST    (fonts/marks/icons, versioned by SHELL)
-const SHELL = "fav-rr-shell-v3";
+const SHELL = "fav-rr-shell-v5";
 const SHELL_FILES = [
   "./",
   "./index.html",

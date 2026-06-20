@@ -109,9 +109,10 @@
   .rank{width:18px;text-align:center;font-size:13px;font-weight:600;color:var(--label2);font-variant-numeric:tabular-nums;flex:none;}
   .art{position:relative;width:52px;height:52px;border-radius:8px;flex:none;background:var(--elev2) center/cover no-repeat;overflow:hidden;}
   .art.round{border-radius:50%;}
-  .art .pbtn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.36);color:#fff;opacity:0;transition:opacity .15s;}
-  .art .pbtn.show{opacity:1;}
-  .art .pbtn svg{width:20px;height:20px;}
+  .art .pbtn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.30);color:#fff;opacity:1;transition:background .15s,color .15s;cursor:pointer;}
+  .art:hover .pbtn{background:rgba(0,0,0,.48);}
+  .art .pbtn.show{background:rgba(0,0,0,.5);color:var(--accent);}
+  .art .pbtn svg{width:24px;height:24px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7));}
   .rbody{flex:1;min-width:0;}
   .rtitle{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .rsub{font-size:14px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
@@ -164,17 +165,23 @@
 
   /* Miniplayer */
   .miniplayer{position:fixed;left:8px;right:8px;bottom:calc(var(--safe-bot) + 58px);z-index:39;
-    display:none;align-items:center;gap:11px;padding:8px 10px;border-radius:14px;
-    background:rgba(44,44,46,.86);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);
-    box-shadow:0 6px 24px rgba(0,0,0,.4);overflow:hidden;}
+    display:none;flex-direction:column;gap:7px;padding:9px 12px 10px;border-radius:14px;
+    background:rgba(26,26,28,.92);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);
+    box-shadow:0 6px 24px rgba(0,0,0,.45);border:1px solid var(--sep);}
   .miniplayer.on{display:flex;}
-  .miniplayer .mart{width:40px;height:40px;border-radius:7px;background:var(--elev2) center/cover no-repeat;flex:none;cursor:pointer;}
-  .miniplayer .minfo{flex:1;min-width:0;cursor:pointer;}
+  .miniplayer .mptop{display:flex;align-items:center;gap:11px;}
+  .miniplayer .mart{width:40px;height:40px;border-radius:7px;background:var(--elev2) center/cover no-repeat;flex:none;}
+  .miniplayer .minfo{flex:1;min-width:0;}
   .miniplayer .mn{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .miniplayer .ma{font-size:12px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .miniplayer .mbtn{background:none;border:none;color:var(--label);cursor:pointer;display:flex;padding:6px;}
   .miniplayer .mbtn svg{width:24px;height:24px;}
-  .miniplayer .mprog{position:absolute;left:0;bottom:0;height:2px;background:var(--accent);width:0;}
+  .miniplayer .mpseek{display:flex;align-items:center;gap:10px;}
+  .miniplayer .mt{font-size:11px;color:var(--label2);font-variant-numeric:tabular-nums;min-width:30px;text-align:center;flex:none;}
+  .miniplayer .mrange{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:3px;background:rgba(245,245,245,.18);outline:none;cursor:pointer;}
+  .miniplayer .mrange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:13px;height:13px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 0 rgba(184,255,74,0);transition:box-shadow .15s;}
+  .miniplayer .mrange:active::-webkit-slider-thumb{box-shadow:0 0 0 5px rgba(184,255,74,.22);}
+  .miniplayer .mrange::-moz-range-thumb{width:13px;height:13px;border:none;border-radius:50%;background:var(--accent);cursor:pointer;}
 
   /* Detail sheet */
   .sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);display:none;align-items:flex-end;}
@@ -253,12 +260,18 @@
 <main class="wrap"><div id="content"><div class="status"><div class="big">Loading…</div></div></div></main>
 
 <div class="miniplayer" id="miniplayer">
-  <div class="mart" id="mpArt"></div>
-  <div class="minfo"><div class="mn" id="mpName"></div><div class="ma" id="mpArtist"></div></div>
-  <button class="mbtn" id="mpPrev"><svg class="icon"><use href="#i-prev"/></svg></button>
-  <button class="mbtn" id="mpBtn"></button>
-  <button class="mbtn" id="mpNext"><svg class="icon"><use href="#i-next"/></svg></button>
-  <div class="mprog" id="mpProg"></div>
+  <div class="mptop">
+    <div class="mart" id="mpArt"></div>
+    <div class="minfo"><div class="mn" id="mpName"></div><div class="ma" id="mpArtist"></div></div>
+    <button class="mbtn" id="mpPrev"><svg class="icon"><use href="#i-prev"/></svg></button>
+    <button class="mbtn" id="mpBtn"></button>
+    <button class="mbtn" id="mpNext"><svg class="icon"><use href="#i-next"/></svg></button>
+  </div>
+  <div class="mpseek">
+    <span class="mt" id="mpCur">0:00</span>
+    <input class="mrange" id="mpRange" type="range" min="0" max="1000" value="0" aria-label="Seek" />
+    <span class="mt" id="mpDur">0:30</span>
+  </div>
 </div>
 
 <nav class="tabbar">
@@ -368,7 +381,7 @@ function metaBits(t){
 function trackRow(t,opt){opt=opt||{};const id=t.id;
   const cover=t.cover_url?`style="background-image:url('${esc(t.cover_url)}')"`:"";
   const playing=state.playingId===id;
-  const play=t.preview_url?`<div class="pbtn ${playing?'show':''}" data-play="${esc(id)}">${ic(playing?"pause":"play")}</div>`:"";
+  const play=`<div class="pbtn ${playing?'show':''}" data-play="${esc(id)}">${ic(playing?"pause":"play")}</div>`;
   const rank=opt.hideRank?"":`<div class="rank">${opt.rank||""}</div>`;
   const hl=opt.library?{v:"+"+(t.spotify_24h_pct||0).toFixed(0)+"%",u:"24H"}:headline(t);
   const trail=opt.removeFrom
@@ -384,7 +397,7 @@ function trackRow(t,opt){opt=opt||{};const id=t.id;
 }
 
 function bindRows(scope,opt){opt=opt||{};
-  scope.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('[data-play]')||e.target.closest('[data-like]')||e.target.closest('[data-rm]'))return;const id=el.dataset.open,t=trackById(id);if(t&&(t.preview_url||t.play_url))togglePlay(id);else openDetail(id);}));
+  scope.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('[data-play]')||e.target.closest('[data-like]')||e.target.closest('[data-rm]'))return;togglePlay(el.dataset.open);}));
   scope.querySelectorAll('[data-play]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();togglePlay(el.dataset.play);}));
   scope.querySelectorAll('[data-like]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const t=trackById(el.dataset.like);if(t)toggleLike(t);}));
   scope.querySelectorAll('[data-rm]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const id=el.dataset.rm;
@@ -640,7 +653,21 @@ document.getElementById('sheet').addEventListener('click',e=>{if(e.target.id==='
   inner.addEventListener('touchend',end);inner.addEventListener('touchcancel',end);})();
 
 /* audio + miniplayer */
-function playTrack(id){const t=trackById(id);const url=t&&(t.preview_url||t.play_url);if(!url)return false;audio.src=url;audio.play().catch(()=>{});state.playingId=id;if(state.openId)openDetail(id);rerender();return true;}
+function startAudio(url,id){audio.src=url;audio.play().catch(()=>{});state.playingId=id;if(state.openId)openDetail(id);rerender();}
+// JSONP lookup of a 30s preview from the iTunes catalog (the API has no CORS but supports &callback=).
+function itunesPreview(t,cb){const term=encodeURIComponent(((t.name||"")+" "+(t.artist||"")).trim());if(!term){cb(null);return;}
+  const name="__itp"+(itunesPreview._n=(itunesPreview._n||0)+1);let done=false;const s=document.createElement("script");
+  const finish=u=>{if(done)return;done=true;clearTimeout(timer);try{delete window[name];}catch(e){}try{s.remove();}catch(e){}cb(u||null);};
+  const timer=setTimeout(()=>finish(null),6000);
+  window[name]=d=>{const r=(d&&d.results)||[];finish(r.length?r[0].previewUrl:null);};
+  s.onerror=()=>finish(null);
+  s.src="https://itunes.apple.com/search?media=music&entity=song&limit=1&term="+term+"&callback="+name;
+  document.body.appendChild(s);}
+function playTrack(id){const t=trackById(id);if(!t)return false;const url=t.preview_url||t.play_url;
+  if(url){startAudio(url,id);return true;}
+  if(t._noPrev){openDetail(id);return false;}
+  itunesPreview(t,found=>{if(found){t.preview_url=found;startAudio(found,id);}else{t._noPrev=true;openDetail(id);}});
+  return true;}
 function togglePlay(id){if(state.playingId===id){audio.pause();state.playingId=null;rerender();return;}playTrack(id);}
 function playStep(delta){const q=state.queue||[];if(!q.length)return false;let i=q.indexOf(state.playingId||state.openId);if(i<0)i=delta>0?-1:q.length;for(let j=i+delta;j>=0&&j<q.length;j+=delta){const t=trackById(q[j]);if(t&&(t.preview_url||t.play_url))return playTrack(q[j]);}return false;}
 audio.addEventListener('ended',()=>{if(!playStep(1)){state.playingId=null;rerender();}});
@@ -654,12 +681,26 @@ function syncMiniplayer(){const mp=document.getElementById('miniplayer');const t
   document.getElementById('mpArtist').textContent=t.artist||t.creator||"";
   document.getElementById('mpBtn').innerHTML=ic(audio.paused?"play":"pause");
   updateMini();}
-function updateMini(){if(!state.playingId)return;const p=document.getElementById('mpProg');if(p&&audio.duration)p.style.width=(audio.currentTime/audio.duration*100)+"%";}
+let mpSeeking=false;
+function mpFill(pct){const r=document.getElementById('mpRange');if(r)r.style.background='linear-gradient(to right,var(--accent) '+pct+'%,rgba(245,245,245,.18) '+pct+'%)';}
+function updateMini(){const r=document.getElementById('mpRange');if(!r)return;
+  const d=audio.duration,c=audio.currentTime,pct=(d&&isFinite(d))?(c/d*100):0;
+  if(!mpSeeking)r.value=Math.round(pct*10);
+  mpFill(pct);
+  const cur=document.getElementById('mpCur'),dur=document.getElementById('mpDur');
+  if(cur)cur.textContent=mmss(c||0); if(dur)dur.textContent=mmss(isFinite(d)?d:30);}
 document.getElementById('mpBtn').onclick=()=>{if(state.playingId)togglePlay(state.playingId);};
 document.getElementById('mpPrev').onclick=()=>playStep(-1);
 document.getElementById('mpNext').onclick=()=>playStep(1);
+(function(){const r=document.getElementById('mpRange');if(!r)return;
+  const seekTo=()=>{const pct=r.value/10;if(audio.duration&&isFinite(audio.duration))audio.currentTime=r.value/1000*audio.duration;mpFill(pct);const cur=document.getElementById('mpCur');if(cur&&audio.duration)cur.textContent=mmss(r.value/1000*audio.duration);};
+  r.addEventListener('input',seekTo);
+  r.addEventListener('pointerdown',()=>{mpSeeking=true;});
+  r.addEventListener('pointerup',()=>{mpSeeking=false;seekTo();});
+  r.addEventListener('change',()=>{mpSeeking=false;seekTo();});
+})();
 // Tap the mini-player (art / title) to expand into the track detail sheet.
-document.getElementById('miniplayer').addEventListener('click',e=>{if(e.target.closest('.mbtn'))return;if(state.playingId)openDetail(state.playingId);});
+document.getElementById('miniplayer').addEventListener('click',e=>{if(e.target.closest('.mbtn')||e.target.closest('.mpseek'))return;if(state.playingId)openDetail(state.playingId);});
 
 /* load */
 function relTime(iso){const d=new Date(iso),diff=(Date.now()-d.getTime())/1000;if(diff<3600)return Math.max(1,Math.round(diff/60))+" min ago";if(diff<86400)return Math.round(diff/3600)+"h ago";return Math.round(diff/86400)+"d ago";}
