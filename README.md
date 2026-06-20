@@ -7,6 +7,9 @@ FAV® · Creative Studio · by Carlo Giannico.
 This is a self-contained web app (landing + app). Same engine as the original Remix Radar,
 re-skinned to the **FAV. Creative Studio** visual identity.
 
+> **Live:** https://carlogiannicomusic.github.io/fav-remix-radar/
+> **Repo:** https://github.com/carlogiannicomusic/fav-remix-radar (this folder is a copy)
+
 ---
 
 ## What's inside

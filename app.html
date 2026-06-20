@@ -17,9 +17,9 @@
   /* FAV. Creative Studio visual identity: matte black + acid green, Satoshi/Druk Wide */
   :root{
     --bg:#0A0A0A; --elev:#121212; --elev2:#1A1A1A; --fill:rgba(245,245,245,.08);
-    --label:#F5F5F5; --label2:rgba(245,245,245,.60); --label3:rgba(245,245,245,.34);
-    --sep:rgba(245,245,245,.13); --accent:#B8FF4A; --on-accent:#0A0A0A; --green:#20B573;
-    --blue:#4DB8D3; --peach:#F39A76; --purple:#D384D2; --radius:6px;
+    --label:#F5F5F5; --label2:rgba(245,245,245,.60); --label3:rgba(245,245,245,.50);
+    --sep:rgba(245,245,245,.13); --accent:#B8FF4A; --on-accent:#0A0A0A;
+    --radius:6px;
     --safe-top:env(safe-area-inset-top); --safe-bot:env(safe-area-inset-bottom);
     --font:"Satoshi","Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   }
@@ -138,7 +138,7 @@
   .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;border:none;width:100%;}
   .btn.fill{background:var(--accent);color:var(--on-accent);}
   .btn.tinted{background:var(--fill);color:var(--label);}
-  .btn.like.on{background:rgba(242,236,98,.16);color:var(--accent);}
+  .btn.like.on{background:rgba(184,255,74,.16);color:var(--accent);}
 
   /* Paywall */
   .lockbox{margin:24px 0;text-align:center;padding:24px 18px;}
@@ -149,7 +149,7 @@
   .lockbox .price{font-size:40px;font-weight:800;}.lockbox .price small{font-size:15px;color:var(--label2);font-weight:600;}
   .lockbox ul{list-style:none;padding:0;margin:16px auto;max-width:300px;text-align:left;}
   .lockbox li{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:15px;}
-  .lockbox li svg{width:18px;height:18px;color:var(--green);flex:none;}
+  .lockbox li svg{width:18px;height:18px;color:var(--accent);flex:none;}
   .lockbox .actions{max-width:330px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
   .lockbox .demo{background:none;border:none;color:var(--label2);font-size:14px;cursor:pointer;}
 
@@ -205,7 +205,7 @@
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
   .tile{background:var(--elev2);border-radius:12px;padding:12px;}
   .tile .k{font-size:12px;color:var(--label2);}.tile .v{font-size:19px;font-weight:700;margin-top:3px;}
-  .tile .v small{font-size:12px;color:var(--green);font-weight:600;}
+  .tile .v small{font-size:12px;color:var(--accent);font-weight:600;}
   .drows{background:var(--elev2);border-radius:12px;padding:2px 14px;margin-bottom:16px;}
   .drow{display:flex;gap:12px;padding:10px 0;font-size:15px;}
   .drow:not(:last-child){border-bottom:.5px solid var(--sep);}
@@ -302,7 +302,7 @@ function savePlaylists(){localStorage.setItem(LS.playlists,JSON.stringify(state.
 function isPremium(){return BETA||localStorage.getItem(LS.premium)==="1";}
 function setPremium(v){v?localStorage.setItem(LS.premium,"1"):localStorage.removeItem(LS.premium);}
 const fmt=n=>{if(n==null||n<=0)return "—";if(n>=1e9)return (n/1e9).toFixed(1)+"B";if(n>=1e6)return (n/1e6).toFixed(1)+"M";if(n>=1e3)return (n/1e3).toFixed(1)+"K";return ""+Math.round(n);};
-const esc=s=>(s==null?"":(""+s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc=s=>(s==null?"":(""+s)).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mmss=s=>{if(!isFinite(s)||s<0)s=0;const m=Math.floor(s/60),x=Math.floor(s%60);return m+":"+(x<10?"0":"")+x;};
 const newId=()=>"pl_"+Math.random().toString(36).slice(2,9)+state.playlists.length;
 const ic=id=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
@@ -666,7 +666,7 @@ async function load(force){
   try{const res=await fetch("./feed.json?t="+Date.now(),{cache:"no-store"});if(!res.ok)throw new Error("HTTP "+res.status);
     state.feed=await res.json();try{localStorage.setItem(LS.feed,JSON.stringify(state.feed));}catch(e){}afterLoad();
   }catch(err){const cached=loadJSON(LS.feed,null);if(cached){state.feed=cached;afterLoad();}
-    else if(state.view==="radar"){document.getElementById('content').innerHTML='<div class="status"><div class="big">Segnale perso</div>Impossibile caricare il feed.<br><br><button class="btn tinted" id="rt" style="max-width:200px;margin:0 auto;">Riprova</button></div>';document.getElementById('rt').onclick=()=>load(true);}}}
+    else if(state.view==="radar"){document.getElementById('content').innerHTML='<div class="status"><div class="big">Signal lost</div>Unable to load the feed.<br><br><button class="btn tinted" id="rt" style="max-width:200px;margin:0 auto;">Retry</button></div>';document.getElementById('rt').onclick=()=>load(true);}}}
 
 /* service worker + auto-update */
 if("serviceWorker" in navigator){
