@@ -168,8 +168,8 @@
     background:rgba(44,44,46,.86);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);
     box-shadow:0 6px 24px rgba(0,0,0,.4);overflow:hidden;}
   .miniplayer.on{display:flex;}
-  .miniplayer .mart{width:40px;height:40px;border-radius:7px;background:var(--elev2) center/cover no-repeat;flex:none;}
-  .miniplayer .minfo{flex:1;min-width:0;}
+  .miniplayer .mart{width:40px;height:40px;border-radius:7px;background:var(--elev2) center/cover no-repeat;flex:none;cursor:pointer;}
+  .miniplayer .minfo{flex:1;min-width:0;cursor:pointer;}
   .miniplayer .mn{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .miniplayer .ma{font-size:12px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .miniplayer .mbtn{background:none;border:none;color:var(--label);cursor:pointer;display:flex;padding:6px;}
@@ -384,7 +384,7 @@ function trackRow(t,opt){opt=opt||{};const id=t.id;
 }
 
 function bindRows(scope,opt){opt=opt||{};
-  scope.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('[data-play]')||e.target.closest('[data-like]')||e.target.closest('[data-rm]'))return;openDetail(el.dataset.open);}));
+  scope.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('[data-play]')||e.target.closest('[data-like]')||e.target.closest('[data-rm]'))return;const id=el.dataset.open,t=trackById(id);if(t&&(t.preview_url||t.play_url))togglePlay(id);else openDetail(id);}));
   scope.querySelectorAll('[data-play]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();togglePlay(el.dataset.play);}));
   scope.querySelectorAll('[data-like]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const t=trackById(el.dataset.like);if(t)toggleLike(t);}));
   scope.querySelectorAll('[data-rm]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const id=el.dataset.rm;
@@ -658,6 +658,8 @@ function updateMini(){if(!state.playingId)return;const p=document.getElementById
 document.getElementById('mpBtn').onclick=()=>{if(state.playingId)togglePlay(state.playingId);};
 document.getElementById('mpPrev').onclick=()=>playStep(-1);
 document.getElementById('mpNext').onclick=()=>playStep(1);
+// Tap the mini-player (art / title) to expand into the track detail sheet.
+document.getElementById('miniplayer').addEventListener('click',e=>{if(e.target.closest('.mbtn'))return;if(state.playingId)openDetail(state.playingId);});
 
 /* load */
 function relTime(iso){const d=new Date(iso),diff=(Date.now()-d.getTime())/1000;if(diff<3600)return Math.max(1,Math.round(diff/60))+" min ago";if(diff<86400)return Math.round(diff/3600)+"h ago";return Math.round(diff/86400)+"d ago";}
