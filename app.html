@@ -306,7 +306,7 @@
 <script>
 const BETA=true; // beta build: all premium windows unlocked for testers
 const LS={likes:"rr_likes_v1",playlists:"rr_playlists_v1",feed:"rr_feed_v3",premium:"rr_premium",seen:"rr_seen_welcome"};
-const state={feed:null,view:"radar",platform:"spotify",window:"",genre:"all",currentPlaylist:null,
+const state={feed:null,view:"radar",platform:"spotify",window:"",genre:"all",country:"",currentPlaylist:null,
   filter:{q:"",genres:new Set(),labels:new Set(),fresh:false,min:null,max:null},
   playingId:null,openId:null,
   artistsFeed:null,artistPlatform:null,artistWindow:null,artistQ:"",
@@ -336,7 +336,10 @@ function platformMeta(k){return platforms().find(p=>p.key===k);}
 function freeWindow(){return state.feed?.free_window||"month";}
 function price(){return state.feed?.premium_price_eur||9.99;}
 function isLocked(k){const w=windowMeta(k);return w&&w.tier==="premium"&&!isPremium();}
-function chartIds(){return (state.feed?.charts?.[state.platform]?.[state.window])||[];}
+function chartIds(){
+  if(state.country){const cc=state.feed?.country_charts?.[state.country];if(cc){const w=cc[state.window]?state.window:"24h";return cc[w]||[];}}
+  return (state.feed?.charts?.[state.platform]?.[state.window])||[];
+}
 function trackById(id){
   if(state.feed?.tracks&&state.feed.tracks[id])return state.feed.tracks[id];
   if(state.soundsFeed?.sounds&&state.soundsFeed.sounds[id])return state.soundsFeed.sounds[id];
@@ -535,7 +538,10 @@ function soundRow(s,rank){const hl=sHeadline(s);
 function renderControls(){
   const c=document.getElementById('controls'),fEl=document.getElementById('filters');
   if(state.view==="radar"&&state.feed){
-    c.innerHTML=platSeg(platforms(),state.platform,"plat")+winSeg(windowsMeta(),state.window,k=>isLocked(k),"win")+genreSeg()+searchBox("Search song, artist or label…",state.filter.q)+filtersHTML();
+    const inCountry=!!state.country;
+    const cwins=(state.feed.country_windows||[]).map(w=>w.key);
+    const winList=inCountry?windowsMeta().filter(w=>cwins.includes(w.key)):windowsMeta();
+    c.innerHTML=(inCountry?"":platSeg(platforms(),state.platform,"plat"))+winSeg(winList,state.window,k=>isLocked(k),"win")+countrySeg()+genreSeg()+searchBox("Search song, artist or label…",state.filter.q)+filtersHTML();
     wireRadarControls(c);return;
   }
   if(state.view==="artists"&&state.artistsFeed){
@@ -573,6 +579,14 @@ function genreSeg(){
     return `<button class="gchip ${b.key===sel?'on':''}" data-gen="${b.key}">${esc(b.label)}${b.key!=="all"?` <span class="gn">${n}</span>`:""}</button>`;
   }).join('')+'</div>';
 }
+function countrySeg(){
+  const cs=state.feed?.countries||[];if(!cs.length)return "";
+  const sel=state.country||"";
+  return '<div class="gsel">'+
+    `<button class="gchip ${sel===""?"on":""}" data-country="">🌍 Global</button>`+
+    cs.map(c=>`<button class="gchip ${c.key===sel?'on':''}" data-country="${esc(c.key)}">${c.flag||""} ${esc(c.key)}</button>`).join('')+
+    '</div>';
+}
 function platSeg(arr,sel,attr){return '<div class="seg">'+arr.map(p=>`<button class="${p.key===sel?'on':''}" data-${attr}="${p.key}">${esc(p.label)}<span class="sub2">${esc(p.metric_label)}</span></button>`).join('')+'</div>';}
 function winSeg(arr,sel,lockFn,attr){return '<div class="seg">'+arr.map(w=>`<button class="${w.key===sel?'on':''}" data-${attr}="${w.key}">${esc(wlabel(w))}${lockFn(w.key)?' <span class="lk">'+ic("lock")+'</span>':''}</button>`).join('')+'</div>';}
 function searchBox(ph,val){return `<div class="search">${ic("search")}<input id="searchInput" type="search" placeholder="${esc(ph)}" value="${esc(val)}"></div>`;}
@@ -590,6 +604,7 @@ function wireRadarControls(c){
   c.querySelectorAll('[data-plat]').forEach(el=>el.onclick=()=>{state.platform=el.dataset.plat;window.scrollTo(0,0);render();});
   c.querySelectorAll('[data-win]').forEach(el=>el.onclick=()=>{state.window=el.dataset.win;window.scrollTo(0,0);render();});
   c.querySelectorAll('[data-gen]').forEach(el=>el.onclick=()=>{state.genre=el.dataset.gen;c.querySelectorAll('[data-gen]').forEach(x=>x.classList.toggle('on',x.dataset.gen===state.genre));renderRadar(document.getElementById('content'));});
+  c.querySelectorAll('[data-country]').forEach(el=>el.onclick=()=>{state.country=el.dataset.country;if(state.country){state.platform="spotify";if(state.window!=="24h"&&state.window!=="7d")state.window="24h";}state.genre="all";window.scrollTo(0,0);render();});
   wireSearch(c,v=>{state.filter.q=v;renderRadar(document.getElementById('content'));});
   c.querySelectorAll('[data-label]').forEach(el=>el.onclick=()=>{toggleSet(state.filter.labels,el.dataset.label);el.classList.toggle('on');renderRadar(document.getElementById('content'));});
   c.querySelectorAll('[data-genre]').forEach(el=>el.onclick=()=>{toggleSet(state.filter.genres,el.dataset.genre);el.classList.toggle('on');renderRadar(document.getElementById('content'));});
@@ -620,7 +635,9 @@ function syncHeader(){const h=document.getElementById('headerRow'),sub=document.
   }
   h.innerHTML=`<div class="hbar"><div class="htitle">${esc(title)}${BETA?'<span class="betatag">BETA</span>':''}</div><div class="hbtns">${ctrls}</div></div>`;
   if(state.view==="radar"){const pm=platformMeta(state.platform),wm=windowMeta(state.window);
-    sub.style.display="flex";sub.innerHTML=state.feed?`<span class="dot"></span><span>${esc(pm?pm.label:"")}</span><span class="pipe">·</span><span>${esc(wm?wlabel(wm):"")}</span><span class="pipe">·</span><span>upd. ${relTime(state.feed.generated_at)}</span>`:`<span>Syncing…</span>`;
+    const cm=state.country&&(state.feed?.countries||[]).find(c=>c.key===state.country);
+    const head=cm?`<span>${cm.flag||""} ${esc(cm.label)}</span><span class="pipe">·</span><span>Spotify</span>`:`<span>${esc(pm?pm.label:"")}</span>`;
+    sub.style.display="flex";sub.innerHTML=state.feed?`<span class="dot"></span>${head}<span class="pipe">·</span><span>${esc(wm?wlabel(wm):"")}</span><span class="pipe">·</span><span>upd. ${relTime(state.feed.generated_at)}</span>`:`<span>Syncing…</span>`;
     document.getElementById('refreshBtn').onclick=()=>load(true);
     document.getElementById('filterBtn').onclick=()=>{const f=document.getElementById('filters');if(f){f.classList.toggle('open');document.getElementById('filterBtn').classList.toggle('on',f.classList.contains('open'));}};
   }else if(state.view==="sounds"){const wm=sWindowMeta(state.soundWindow);sub.style.display="flex";sub.innerHTML=`<span class="dot"></span><span>TikTok</span><span class="pipe">·</span><span>${esc(wm?wlabel(wm):"")}</span><span class="pipe">·</span><span>most used sounds</span>`;}
