@@ -66,6 +66,11 @@
     font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--label);}
   .brandbar .inst{font-weight:400;color:var(--label2);}
   .brandbar .r{color:var(--accent);}
+  .brandbar .bb-home{display:inline-flex;align-items:center;gap:4px;color:var(--label2);font-weight:700;cursor:pointer;text-decoration:none;}
+  .brandbar .bb-home svg{width:12px;height:12px;}
+  .brandbar .bb-home:hover{color:var(--accent);}
+  body.standalone .brandbar .bb-home{display:none;}
+  @media(max-width:380px){.brandbar .inst{display:none;}}
   .sub .pipe{color:var(--label3);}
   .controls{padding:0 16px 10px;display:flex;flex-direction:column;gap:8px;}
 
@@ -256,7 +261,7 @@
 </defs></svg>
 
 <header>
-  <div class="brandbar"><span><b>FAV®</b> <span class="inst">Creative Studio</span></span><span class="r">Remix Radar</span></div>
+  <div class="brandbar"><a class="bb-home" href="./index.html" aria-label="Back to homepage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Home</a><span><b>FAV®</b> <span class="inst">Creative Studio</span></span><span class="r">Remix Radar</span></div>
   <div id="headerRow"></div>
   <div class="sub" id="sub"></div>
   <div class="controls" id="controls"></div>
@@ -313,6 +318,7 @@ const state={feed:null,view:"radar",platform:"spotify",window:"",genre:"all",cou
   soundsFeed:null,soundWindow:null,soundQ:"",queue:[],
   likes:loadJSON(LS.likes,{}),playlists:loadJSON(LS.playlists,[])};
 const audio=document.getElementById('audio');
+try{if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true)document.body.classList.add('standalone');}catch(e){}
 
 function loadJSON(k,d){try{return JSON.parse(localStorage.getItem(k))??d;}catch(e){return d;}}
 function saveLikes(){localStorage.setItem(LS.likes,JSON.stringify(state.likes));}
