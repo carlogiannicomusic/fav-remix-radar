@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Remix Radar — FAV®</title>
-<meta name="description" content="A daily radar of the fastest-rising songs and sounds to remix — across TikTok, Spotify, YouTube and Shazam. A FAV. Creative Studio instrument." />
+<title>Remix Radar — FAV® · the daily remix-radar app</title>
+<meta name="description" content="The mobile app that shows you the day's fastest-rising songs and sounds to remix — across TikTok, Spotify, YouTube and Shazam. Add it to your Home Screen. From sound to vision. A FAV. Creative Studio app." />
 <meta name="theme-color" content="#0A0A0A" />
 <meta name="apple-mobile-web-app-title" content="Remix Radar" />
 <link rel="icon" href="./brand/icon-512.png" sizes="any" />
 <link rel="apple-touch-icon" href="./brand/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Remix Radar — FAV® · find the song to remix before it blows up" />
-<meta property="og:description" content="The day's fastest-rising songs and sounds to remix. From sound to vision. A FAV. Creative Studio instrument." />
+<meta property="og:title" content="Remix Radar — the daily remix-radar app · FAV®" />
+<meta property="og:description" content="Find the song to remix before it blows up. Add Remix Radar to your Home Screen. From sound to vision." />
 <meta property="og:image" content="./brand/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 
@@ -25,32 +25,29 @@
 
 <style>
 :root{
-  /* FAV. Creative Studio palette (brandbook): matte black + acid green + chrome */
   --ink:#0A0A0A; --panel:#121212; --panel2:#1A1A1A; --acid:#B8FF4A;
   --white:#F5F5F5; --chrome:#C8C8C8; --silver:#E0E0E0;
-  --mute:rgba(245,245,245,.55); --faint:rgba(245,245,245,.50); --line:rgba(245,245,245,.13);
-  --display:'Druk Wide','Arial Narrow Bold','Arial Narrow',Impact,sans-serif;
+  --mute:rgba(245,245,245,.55); --faint:rgba(245,245,245,.40); --line:rgba(245,245,245,.13);
+  --display:'Druk Wide','Arial Narrow Bold',Impact,sans-serif;
   --body:'Satoshi',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
   --mono:ui-monospace,'SF Mono','Menlo',monospace;
-  --maxw:1280px;
+  --maxw:1240px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
-body{font-family:var(--body);background:var(--ink);color:var(--white);font-weight:400;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
 a{color:inherit;text-decoration:none;}
 img{max-width:100%;display:block;}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,56px);}
-.mono{font-family:var(--mono);}
 
-/* ---------- ticker ---------- */
+/* ticker */
 .ticker{background:var(--ink);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;}
 .ticker .track{display:inline-flex;gap:34px;padding:8px 0;animation:tick 34s linear infinite;will-change:transform;}
 .ticker span{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--chrome);display:inline-flex;gap:34px;}
 .ticker b{color:var(--acid);font-weight:400;}
 @keyframes tick{to{transform:translateX(-50%);}}
 
-/* ---------- nav ---------- */
+/* nav */
 .nav{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.82);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line);}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;height:64px;}
 .brand{display:flex;align-items:center;gap:13px;}
@@ -58,89 +55,93 @@ img{max-width:100%;display:block;}
 .brand .bt{line-height:1.05;padding-left:13px;border-left:1px solid var(--line);}
 .brand .bt .wm{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.02em;text-transform:uppercase;}
 .brand .bt .inst{font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
-.nav .links{display:flex;align-items:center;gap:28px;}
+.nav .links{display:flex;align-items:center;gap:26px;}
 .nav .links a{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);transition:color .2s;}
 .nav .links a:hover{color:var(--acid);}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--acid);padding:11px 18px;border-radius:2px;transition:transform .15s ease,background .2s ease,color .2s ease,box-shadow .2s;}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--acid);padding:11px 18px;border-radius:2px;transition:transform .15s ease,background .2s,color .2s,box-shadow .2s;}
 .btn svg{width:14px;height:14px;}
 .btn-acid{background:var(--acid);color:#0A0A0A;}
 .btn-acid:hover{box-shadow:0 0 0 3px rgba(184,255,74,.22);transform:translateY(-1px);}
 .btn-ghost{background:transparent;color:var(--white);border-color:var(--line);}
 .btn-ghost:hover{border-color:var(--white);transform:translateY(-1px);}
 .nav .btn{padding:9px 15px;}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:2px;}
 
-/* ---------- index label (margiela-style) ---------- */
-.ixrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
-.ixrow .acid{color:var(--acid);}
-.ixrow .ln{flex:1;height:1px;background:var(--line);}
+/* iPhone mockup */
+.phone{position:relative;width:100%;max-width:300px;aspect-ratio:390/844;border-radius:46px;
+  background:#070707;border:1px solid #2c2c2c;padding:11px;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 2px #000 inset,0 0 60px rgba(184,255,74,.05);}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#000;}
+.phone .scr img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.phone .island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:78px;height:22px;background:#000;border-radius:13px;z-index:2;}
+.phone.tilt{transform:rotate(2.2deg);}
+.phone.tiltL{transform:rotate(-2.2deg);}
 
-/* ---------- hero ---------- */
-.hero{position:relative;background:var(--ink);padding:clamp(28px,5vw,56px) 0 clamp(34px,5vw,60px);overflow:hidden;}
-.hero .grain,.hero .deco{position:absolute;inset:0;pointer-events:none;}
-.radar-deco{position:absolute;top:-60px;right:-120px;width:520px;height:520px;pointer-events:none;opacity:.5;}
-.radar-deco circle{fill:none;stroke:var(--acid);stroke-width:1;opacity:.22;}
-.radar-deco .sweep{transform-origin:260px 260px;animation:spin 7s linear infinite;}
-.radar-deco .sweep line{stroke:var(--acid);stroke-width:1.4;opacity:.5;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.hero-top{margin-bottom:clamp(16px,3vw,30px);}
-.demo{display:inline-block;margin-left:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:var(--acid);color:#0A0A0A;padding:3px 8px;border-radius:2px;}
-.giant{font-family:var(--display);font-weight:700;text-transform:uppercase;line-height:.96;letter-spacing:.01em;font-size:clamp(30px,7.6vw,134px);}
-.giant .line{display:block;overflow:hidden;}
-.giant .line>span{display:block;transform:translateY(115%);animation:rise 1s cubic-bezier(.19,1,.22,1) forwards;}
-.giant .line.acid>span{color:var(--acid);}
-.giant .line:nth-child(2)>span{animation-delay:.12s;}
-@keyframes rise{to{transform:translateY(0);}}
-.hero-foot{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,72px);align-items:end;margin-top:clamp(24px,4vw,46px);}
-.lede{font-weight:900;font-size:clamp(22px,3vw,38px);line-height:1.04;letter-spacing:-.01em;}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:clamp(28px,5vw,56px) 0 clamp(40px,6vw,80px);}
+.hero .wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(24px,5vw,56px);align-items:center;}
+.hero .glow{position:absolute;top:-160px;right:-160px;width:560px;height:560px;border-radius:50%;
+  background:radial-gradient(circle,rgba(184,255,74,.12),transparent 62%);pointer-events:none;}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acid);margin-bottom:18px;}
+.kicker .demo{background:var(--acid);color:#0A0A0A;padding:3px 8px;border-radius:2px;}
+.giant{font-family:var(--display);font-weight:700;text-transform:uppercase;line-height:.97;letter-spacing:.01em;font-size:clamp(34px,6.6vw,92px);}
+.giant .acid{color:var(--acid);}
+.lede{font-weight:900;font-size:clamp(20px,2.4vw,30px);line-height:1.08;margin-top:18px;letter-spacing:-.01em;}
 .lede em{font-style:normal;color:var(--acid);}
-.hero-right .sub{font-size:clamp(14.5px,1.4vw,17px);line-height:1.6;color:var(--mute);max-width:44ch;}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
-.liveline{display:flex;align-items:center;gap:9px;margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);}
-.pulse{width:8px;height:8px;border-radius:50%;background:var(--acid);position:relative;box-shadow:0 0 10px rgba(184,255,74,.8);}
-.pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--acid);opacity:.5;animation:pulse 1.8s ease-out infinite;}
-@keyframes pulse{0%{transform:scale(.6);opacity:.6;}100%{transform:scale(1.9);opacity:0;}}
+.sub{font-size:clamp(14.5px,1.45vw,17px);line-height:1.6;color:var(--mute);margin-top:14px;max-width:46ch;}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+.badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:6px 12px;}
+.badge b{color:var(--acid);font-weight:400;}
+.hero .phonewrap{display:flex;justify-content:center;}
 
-/* ---------- platform band ---------- */
+/* platform band */
 .band{background:var(--ink);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;}
 .band .track{display:inline-flex;align-items:center;gap:44px;white-space:nowrap;padding:16px 0;animation:tick 36s linear infinite;}
 .band .track>span{display:inline-flex;align-items:center;gap:44px;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(20px,3vw,40px);letter-spacing:.01em;color:var(--silver);}
 .band .dot{width:8px;height:8px;border-radius:50%;background:var(--acid);flex:none;}
 .band .o{color:var(--acid);}
 
-/* ---------- generic section ---------- */
-.sec{padding:clamp(58px,8vw,120px) 0;border-bottom:1px solid var(--line);}
+/* sections */
+.sec{padding:clamp(58px,8vw,118px) 0;border-bottom:1px solid var(--line);}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acid);}
 .eyebrow .id{color:var(--faint);}
-h2.t{font-family:var(--body);font-weight:900;text-transform:uppercase;font-size:clamp(28px,4.4vw,56px);line-height:1.0;letter-spacing:-.01em;margin-top:16px;}
+h2.t{font-family:var(--body);font-weight:900;text-transform:uppercase;font-size:clamp(28px,4.4vw,54px);line-height:1.0;letter-spacing:-.01em;margin-top:16px;}
 h2.t .acid{color:var(--acid);}
+.lead2{font-size:clamp(15px,1.5vw,18px);color:var(--mute);margin-top:14px;max-width:60ch;line-height:1.6;}
 
-/* ---------- about ---------- */
-.about .grid{display:grid;grid-template-columns:1.3fr .9fr;gap:clamp(26px,5vw,64px);margin-top:clamp(32px,5vw,56px);align-items:stretch;}
-.about .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);}
-.about .cols p{font-size:clamp(14.5px,1.4vw,17px);line-height:1.66;color:var(--silver);}
-.about .cols p b{color:var(--white);font-weight:700;}
-.chrome{position:relative;border:1px solid var(--line);border-radius:3px;min-height:280px;overflow:hidden;
-  background:linear-gradient(135deg,#1c1c1c 0%,#2a2a2a 22%,#161616 40%,#3a3a3a 58%,#101010 78%,#242424 100%);
-  display:flex;align-items:center;justify-content:center;}
-.chrome img{width:64%;opacity:.96;filter:drop-shadow(0 6px 30px rgba(0,0,0,.6));}
-.chrome .tag{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--acid);}
-.chrome .tag.r{left:auto;right:12px;color:var(--faint);}
-.pull{font-weight:500;font-size:clamp(19px,2.3vw,28px);line-height:1.22;letter-spacing:-.01em;border-left:2px solid var(--acid);padding-left:22px;margin-top:clamp(32px,5vw,54px);max-width:32ch;}
-.pull em{font-style:normal;color:var(--acid);}
+/* showcase */
+.showcase{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;margin-top:clamp(34px,5vw,56px);}
+.showcase .phones{display:flex;justify-content:center;gap:18px;}
+.showcase .phones .phone{max-width:240px;}
+.flist{list-style:none;display:flex;flex-direction:column;gap:18px;}
+.flist li{display:flex;gap:14px;align-items:flex-start;}
+.flist .ic{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none;color:var(--acid);background:var(--panel);}
+.flist .ic svg{width:18px;height:18px;}
+.flist h3{font-size:16px;font-weight:700;margin-bottom:3px;}
+.flist p{font-size:14px;color:var(--mute);line-height:1.5;}
 
-/* ---------- trending ---------- */
+/* how */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border-top:1px solid var(--line);}
+.step{padding:26px 22px 30px;border-right:1px solid var(--line);}
+.step:last-child{border-right:none;}
+.step .n{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,52px);line-height:1;color:var(--acid);}
+.step h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px;}
+.step p{font-size:14px;line-height:1.55;color:var(--mute);}
+
+/* trending */
 .trending .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:32px;}
 .trending .meta{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);}
 .trending .meta b{color:var(--acid);font-weight:400;}
 .tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .tr-card{display:flex;align-items:center;gap:15px;padding:13px 16px;border:1px solid var(--line);border-radius:3px;background:var(--panel);transition:border-color .2s,background .2s,transform .2s;}
 .tr-card:hover{border-color:var(--acid);background:var(--panel2);transform:translateY(-2px);}
-.tr-rank{font-family:var(--mono);font-size:13px;width:26px;color:var(--faint);flex:none;}
+.tr-rank{font-family:var(--mono);font-size:13px;width:26px;color:var(--mute);flex:none;}
 .tr-art{width:50px;height:50px;border-radius:3px;background:#222 center/cover no-repeat;flex:none;}
 .tr-meta{flex:1;min-width:0;}
 .tr-name{display:block;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tr-art2{display:block;font-size:12.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
-.tr-g{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--faint);flex:none;}
+.tr-g{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--mute);flex:none;}
 .tr-g.up{color:var(--acid);}
 .tr-fallback{grid-column:1/-1;padding:30px;text-align:center;color:var(--mute);border:1px dashed var(--line);border-radius:3px;}
 .tr-fallback a{color:var(--acid);font-weight:700;}
@@ -148,84 +149,77 @@ h2.t .acid{color:var(--acid);}
 @keyframes sk{to{background-position:-200% 0;}}
 .trending .foot{margin-top:30px;display:flex;justify-content:center;}
 
-/* ---------- how ---------- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border-top:1px solid var(--line);}
-.step{padding:26px 22px 30px;border-right:1px solid var(--line);}
-.step:last-child{border-right:none;}
-.step .n{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.6vw,54px);line-height:1;color:var(--acid);}
-.step h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px;}
-.step p{font-size:14px;line-height:1.55;color:var(--mute);}
+/* install */
+.install .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:clamp(34px,5vw,52px);}
+.icard{border:1px solid var(--line);border-radius:4px;padding:24px 22px;background:var(--panel);}
+.icard.feat{border-color:var(--acid);background:#11140b;}
+.icard .h{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.02em;margin-bottom:16px;}
+.icard .h svg{width:20px;height:20px;color:var(--acid);}
+.icard ol{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:12px;}
+.icard ol li{counter-increment:s;display:flex;gap:12px;font-size:14px;line-height:1.45;color:var(--silver);}
+.icard ol li::before{content:counter(s);font-family:var(--mono);font-size:11px;color:var(--acid);border:1px solid var(--acid);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex:none;}
+.icard p{font-size:14px;color:var(--mute);line-height:1.55;}
+.icard .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:14px;}
 
-/* ---------- inside ---------- */
-.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:42px;}
-.card{border:1px solid var(--line);border-radius:3px;padding:22px 20px 24px;background:var(--panel);transition:transform .2s,border-color .2s;position:relative;}
-.card:hover{transform:translateY(-4px);border-color:var(--acid);}
-.card .cn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--faint);}
-.card h3{font-family:var(--display);font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.01em;margin:14px 0 8px;}
-.card p{font-size:13.5px;line-height:1.55;color:var(--mute);}
-.card .bar{height:2px;width:34px;background:var(--acid);margin-bottom:16px;}
-
-/* ---------- model ---------- */
+/* model */
 .model .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px;}
 .plan{border:1px solid var(--line);border-radius:3px;padding:26px 24px;background:var(--panel);}
 .plan.pro{border-color:var(--acid);background:#11140b;}
 .plan .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);}
 .plan.pro .tag{color:var(--acid);}
 .plan .price{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.4vw,40px);margin:10px 0 6px;letter-spacing:.01em;}
-.plan .price small{font-family:var(--body);font-size:14px;font-weight:500;color:var(--mute);letter-spacing:0;}
+.plan .price small{font-family:var(--body);font-size:14px;font-weight:500;color:var(--mute);}
 .plan p{font-size:14px;line-height:1.55;color:var(--silver);}
 .plan p b{color:var(--acid);font-weight:700;}
 
-/* ---------- final ---------- */
-.final{background:var(--ink);padding:clamp(64px,10vw,140px) 0;text-align:center;border-bottom:1px solid var(--line);overflow:hidden;}
-.final h2{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1.0;font-size:clamp(34px,9vw,150px);}
+/* final */
+.final{padding:clamp(60px,9vw,120px) 0;border-bottom:1px solid var(--line);overflow:hidden;}
+.final .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,56px);align-items:center;}
+.final h2{font-family:var(--display);font-weight:700;text-transform:uppercase;line-height:.98;letter-spacing:.01em;font-size:clamp(34px,5.4vw,76px);}
 .final h2 .acid{color:var(--acid);}
-.final .cta-row{justify-content:center;margin-top:30px;}
-.final .hint{margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);}
+.final .hint{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:18px;}
+.final .phonewrap{display:flex;justify-content:center;}
 
-/* ---------- footer ---------- */
-.foot{background:var(--ink);padding:clamp(48px,6vw,76px) 0 34px;}
+/* footer */
+.foot{padding:clamp(48px,6vw,76px) 0 34px;}
 .foot .top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px;align-items:start;}
-.foot .sig{height:30px;width:auto;margin-bottom:18px;}
 .foot .vision{font-family:var(--display);font-weight:700;font-size:clamp(18px,2vw,26px);text-transform:uppercase;letter-spacing:.01em;line-height:1.1;}
 .foot .vision .acid{color:var(--acid);}
+.foot .sig{height:30px;margin-bottom:18px;}
 .foot .desc{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:12px;}
 .foot h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;}
 .foot ul{list-style:none;}
-.foot li{margin-bottom:6px;}
-.foot li a{font-size:14px;color:var(--silver);display:inline-block;padding:4px 0;}
+.foot li a{font-size:14px;color:var(--silver);display:inline-block;padding:5px 0;}
 .foot li a:hover{color:var(--acid);}
 .foot .bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:clamp(34px,5vw,56px);padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
 
-/* ---------- focus + reveal ---------- */
-a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:3px;border-radius:2px;}
-.step,.card,.cols,.plan,.tr-card,.tr-meta,.hero-right,.about .grid,.feat{min-width:0;}
+/* reveal */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms);}
 .reveal.in{opacity:1;transform:none;}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;}.giant .line>span{animation:none;transform:none;}.ticker .track,.band .track{animation:none;}.radar-deco .sweep{animation:none;}.pulse::after{animation:none;}.tr-skeleton{animation:none;}html{scroll-behavior:auto;}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;}.ticker .track,.band .track{animation:none;}.phone.tilt,.phone.tiltL{transform:none;}html{scroll-behavior:auto;}}
 
-/* ---------- responsive ---------- */
-@media (max-width:880px){
+/* responsive */
+@media (max-width:900px){
   .nav .links{display:none;}
   .nav .btn{padding:12px 16px;}
-  .foot li a{padding:8px 0;}
-  .radar-deco{right:-60px;width:340px;height:340px;top:-30px;}
-  .hero-foot{grid-template-columns:1fr;gap:26px;align-items:start;}
-  .about .grid{grid-template-columns:1fr;}
-  .tgrid{grid-template-columns:1fr;}
+  .hero .wrap{grid-template-columns:1fr;gap:30px;}
+  .hero .phonewrap{order:-1;}
+  .showcase{grid-template-columns:1fr;gap:34px;}
+  .install .grid{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr 1fr;}
   .step:nth-child(2){border-right:none;}
   .step:nth-child(1),.step:nth-child(2){border-bottom:1px solid var(--line);}
-  .feat{grid-template-columns:1fr 1fr;}
+  .tgrid{grid-template-columns:1fr;}
   .model .row{grid-template-columns:1fr;}
+  .final .wrap{grid-template-columns:1fr;gap:30px;}
+  .final .phonewrap{order:-1;}
   .foot .top{grid-template-columns:1fr;gap:26px;}
 }
 @media (max-width:520px){
-  .about .cols{grid-template-columns:1fr;}
-  .feat{grid-template-columns:1fr;}
   .steps{grid-template-columns:1fr;}
   .step{border-right:none;border-bottom:1px solid var(--line);}
   .step:last-child{border-bottom:none;}
+  .showcase .phones{flex-direction:column;align-items:center;}
   .brand .bt .inst{display:none;}
 }
 </style>
@@ -234,8 +228,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
 
 <div class="ticker" aria-hidden="true">
   <div class="track">
-    <span><b>●</b> Daily trending songs to remix <b>/</b> Find it before it blows up <b>/</b> TikTok · Spotify · YouTube · Shazam <b>/</b> FAV® — From sound to vision <b>/</b></span>
-    <span><b>●</b> Daily trending songs to remix <b>/</b> Find it before it blows up <b>/</b> TikTok · Spotify · YouTube · Shazam <b>/</b> FAV® — From sound to vision <b>/</b></span>
+    <span><b>●</b> Daily trending songs to remix <b>/</b> Find it before it blows up <b>/</b> No app store needed <b>/</b> FAV® — From sound to vision <b>/</b></span>
+    <span><b>●</b> Daily trending songs to remix <b>/</b> Find it before it blows up <b>/</b> No app store needed <b>/</b> FAV® — From sound to vision <b>/</b></span>
   </div>
 </div>
 
@@ -246,10 +240,10 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
       <span class="bt"><span class="wm">Remix Radar</span><span class="inst">FAV® · Creative Studio</span></span>
     </a>
     <div class="links">
-      <a href="#about">What it is</a>
-      <a href="#trending">Trending</a>
+      <a href="#features">Features</a>
       <a href="#how">How it works</a>
-      <a href="#inside">Inside</a>
+      <a href="#trending">Trending</a>
+      <a href="#install">Install</a>
       <a href="#model">Model</a>
     </div>
     <a class="btn btn-acid" href="./app.html">Open the app
@@ -259,29 +253,32 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
 </nav>
 
 <header class="hero" id="top">
-  <svg class="radar-deco" viewBox="0 0 520 520" aria-hidden="true">
-    <circle cx="260" cy="260" r="66"/><circle cx="260" cy="260" r="130"/><circle cx="260" cy="260" r="196"/><circle cx="260" cy="260" r="258"/>
-    <g class="sweep"><line x1="260" y1="260" x2="260" y2="6"/></g>
-  </svg>
+  <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="hero-top">
-      <span class="ixrow"><span class="acid">●</span> FAV® / REMIX RADAR <span class="demo">Demo / Beta</span></span>
-    </div>
-    <h1 class="giant">
-      <span class="line"><span>Remix</span></span>
-      <span class="line acid"><span>Radar</span></span>
-    </h1>
-    <div class="hero-foot">
+    <div>
+      <span class="kicker">FAV® / Remix Radar <span class="demo">Demo · Beta</span></span>
+      <h1 class="giant">Remix<br><span class="acid">Radar</span></h1>
       <p class="lede">Find the song to remix <em>before</em> it blows up.</p>
-      <div class="hero-right">
-        <p class="sub">A daily radar of the fastest-rising songs and sounds — across TikTok, Spotify, YouTube &amp; Shazam. Ranked for remix potential, refreshed every morning.</p>
-        <div class="cta-row">
-          <a class="btn btn-acid" href="./app.html">Open Remix Radar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="#how">How it works</a>
-        </div>
-        <p class="liveline"><span class="pulse"></span> Updated this morning — <span id="feed-date">live</span></p>
+      <p class="sub">The daily app that surfaces the fastest-rising songs and sounds across TikTok, Spotify, YouTube &amp; Shazam — ranked for remix potential, refreshed every morning. Preview, save, and start your edit first.</p>
+      <div class="cta-row">
+        <a class="btn btn-acid" href="#install">Add to Home Screen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="./app.html">Open in browser
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="badges">
+        <span class="badge"><b>iPhone</b></span>
+        <span class="badge"><b>Android</b></span>
+        <span class="badge"><b>Web</b></span>
+        <span class="badge">No app store · installs in 2 taps</span>
+      </div>
+    </div>
+    <div class="phonewrap reveal">
+      <div class="phone tilt">
+        <div class="island" aria-hidden="true"></div>
+        <div class="scr"><img src="./brand/shot-radar.png" alt="Remix Radar app — today's trending songs to remix" /></div>
       </div>
     </div>
   </div>
@@ -294,21 +291,34 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
   </div>
 </section>
 
-<section class="sec about" id="about">
+<section class="sec" id="features">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="id">[01]</span> What it is</span>
-    <h2 class="t reveal" style="--d:60ms">From sound <span class="acid">to signal.</span></h2>
-    <div class="grid">
-      <div class="cols">
-        <p class="reveal" style="--d:120ms">Remixes are the fastest way for a producer to gain reach — but only if you catch a track <b>while it's rising</b>, not after it peaks. The signal is out there: TikTok creates, Spotify streams, YouTube views, Shazam tags. It's just scattered across platforms, and the professional tools are expensive, B2B, and built for labels.</p>
-        <p class="reveal" style="--d:180ms">Remix Radar pulls it all into one daily view, ranked for <b>remix potential</b> — momentum, freshness and cross-platform pickup. Open it with your morning coffee, find the track that's about to blow up, and start your edit before everyone else does. A FAV. Creative Studio instrument for producers and artists.</p>
+    <span class="eyebrow reveal"><span class="id">[01]</span> The app</span>
+    <h2 class="t reveal" style="--d:60ms">Built to <span class="acid">audition fast.</span></h2>
+    <div class="showcase">
+      <div class="phones reveal" style="--d:120ms">
+        <div class="phone tiltL"><div class="island" aria-hidden="true"></div><div class="scr"><img src="./brand/shot-radar.png" alt="Trending songs list" /></div></div>
+        <div class="phone tilt"><div class="island" aria-hidden="true"></div><div class="scr"><img src="./brand/shot-detail.png" alt="Track preview with scrubber" /></div></div>
       </div>
-      <figure class="chrome reveal" style="--d:160ms">
-        <span class="tag">FAV®</span><span class="tag r">// CHROME</span>
-        <img src="./brand/fav-dot-white.png" alt="" loading="lazy" />
-      </figure>
+      <ul class="flist reveal" style="--d:160ms">
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><div><h3>Tap to play</h3><p>One tap previews any track — a 30-second clip with a scrubber to jump back and forth.</p></div></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/></svg></span><div><h3>Ranked for momentum</h3><p>24h / 7-day / month growth across four platforms, so you catch a track while it's rising.</p></div></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg></span><div><h3>Like &amp; build playlists</h3><p>Heart what you'll flip, drop it into a renamable “to remix” list, jump straight to Spotify.</p></div></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></span><div><h3>Artists &amp; TikTok sounds</h3><p>Not just songs — who's breaking out, and the sounds being used most right now.</p></div></li>
+      </ul>
     </div>
-    <p class="pull reveal" style="--d:120ms">We don't sell time — we sell <em>transformation.</em> Same idea, pointed at sound: catch what's breaking anywhere, and make it yours.</p>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="id">[02]</span> How it works</span>
+    <div class="steps">
+      <div class="step reveal"><div class="n">01</div><h3>Scan</h3><p>Every morning we pull the top charts on each platform, across three windows — 24h, 7 days, a month.</p></div>
+      <div class="step reveal" style="--d:80ms"><div class="n">02</div><h3>Rank</h3><p>Tracks are scored for remix potential: momentum, freshness and cross-platform pickup.</p></div>
+      <div class="step reveal" style="--d:160ms"><div class="n">03</div><h3>Deliver</h3><p>The radar updates instantly, and the day's top picks land in a private Telegram drop.</p></div>
+      <div class="step reveal" style="--d:240ms"><div class="n">04</div><h3>Remix</h3><p>You grab it while it's climbing — preview, save to a playlist, and start your edit first.</p></div>
+    </div>
   </div>
 </section>
 
@@ -316,7 +326,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
   <div class="wrap">
     <div class="head">
       <div>
-        <span class="eyebrow reveal"><span class="id">[02]</span> Live from today's feed</span>
+        <span class="eyebrow reveal"><span class="id">[03]</span> Live from today's feed</span>
         <h2 class="t reveal" style="--d:60ms">Trending <span class="acid">right now</span></h2>
       </div>
       <div class="meta reveal" style="--d:120ms" id="trending-label">Spotify · <b>24h growth</b> · updating…</div>
@@ -333,27 +343,36 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
   </div>
 </section>
 
-<section class="sec how" id="how">
+<section class="sec install" id="install">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="id">[03]</span> How it works</span>
-    <div class="steps">
-      <div class="step reveal"><div class="n">01</div><h3>Scan</h3><p>Every morning we pull the top charts on each platform, across three windows — 24h, 7 days, a month.</p></div>
-      <div class="step reveal" style="--d:80ms"><div class="n">02</div><h3>Rank</h3><p>Tracks are scored for remix potential: momentum, freshness and cross-platform pickup.</p></div>
-      <div class="step reveal" style="--d:160ms"><div class="n">03</div><h3>Deliver</h3><p>The radar updates instantly, and the day's top picks land in a private Telegram drop.</p></div>
-      <div class="step reveal" style="--d:240ms"><div class="n">04</div><h3>Remix</h3><p>You grab it while it's climbing — preview, save to a playlist, and start your edit first.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec inside" id="inside">
-  <div class="wrap">
-    <span class="eyebrow reveal"><span class="id">[04]</span> Inside the app</span>
-    <h2 class="t reveal" style="--d:60ms">Four ways to read <span class="acid">the moment.</span></h2>
-    <div class="feat">
-      <div class="card reveal"><div class="bar"></div><div class="cn">01 / RADAR</div><h3>Radar</h3><p>Trending songs by platform &amp; window, with day-over-day movement and 30-second previews.</p></div>
-      <div class="card reveal" style="--d:80ms"><div class="bar"></div><div class="cn">02 / ARTISTS</div><h3>Artists</h3><p>The same charts for artists — see who's breaking out before they're everywhere.</p></div>
-      <div class="card reveal" style="--d:160ms"><div class="bar"></div><div class="cn">03 / SOUNDS</div><h3>Sounds</h3><p>The TikTok sounds being used most right now — the earliest remix signal there is.</p></div>
-      <div class="card reveal" style="--d:240ms"><div class="bar"></div><div class="cn">04 / LIBRARY</div><h3>Library</h3><p>Likes and renamable playlists — build your “to remix” list and come back to it.</p></div>
+    <span class="eyebrow reveal"><span class="id">[04]</span> Install</span>
+    <h2 class="t reveal" style="--d:60ms">On your Home Screen <span class="acid">in 2 taps.</span></h2>
+    <p class="lead2 reveal" style="--d:90ms">No app store, no download, no account. Remix Radar is a web app — add it once and it opens full-screen like a native app, with its own icon.</p>
+    <div class="grid">
+      <div class="icard feat reveal">
+        <div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> iPhone / iPad</div>
+        <ol>
+          <li>Open this page in <b style="color:#fff">Safari</b>.</li>
+          <li>Tap <b style="color:#fff">Share</b> (the square with the up-arrow).</li>
+          <li>Tap <b style="color:#fff">Add to Home Screen</b> → <b style="color:#fff">Add</b>.</li>
+        </ol>
+        <div class="mini">Launches full-screen · own icon</div>
+      </div>
+      <div class="icard reveal" style="--d:80ms">
+        <div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg> Android</div>
+        <ol>
+          <li>Open this page in <b style="color:#fff">Chrome</b>.</li>
+          <li>Tap menu <b style="color:#fff">⋮</b>.</li>
+          <li>Tap <b style="color:#fff">Install app</b> / Add to Home screen.</li>
+        </ol>
+        <div class="mini">Installs as a PWA</div>
+      </div>
+      <div class="icard reveal" style="--d:160ms">
+        <div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/></svg> Desktop</div>
+        <p>Just open it in any browser — or click the install icon in the address bar (Chrome / Edge) to get a desktop window.</p>
+        <div style="margin-top:18px"><a class="btn btn-acid" href="./app.html">Open Remix Radar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
     </div>
   </div>
 </section>
@@ -370,13 +389,19 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
 
 <section class="final">
   <div class="wrap">
-    <h2 class="reveal">Remix<br><span class="acid">Radar</span></h2>
-    <div class="cta-row">
-      <a class="btn btn-acid" href="./app.html">Launch the app
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+    <div>
+      <h2 class="reveal">Get<br><span class="acid">Remix Radar</span></h2>
+      <div class="cta-row">
+        <a class="btn btn-acid" href="#install">Add to Home Screen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="./app.html">Open in browser</a>
+      </div>
+      <p class="hint">Free to start · iPhone · Android · Web · no app store</p>
     </div>
-    <p class="hint">Works in any browser — add to your Home Screen for the full-screen app</p>
+    <div class="phonewrap reveal">
+      <div class="phone tilt"><div class="island" aria-hidden="true"></div><div class="scr"><img src="./brand/shot-detail.png" alt="Remix Radar player" /></div></div>
+    </div>
   </div>
 </section>
 
@@ -384,7 +409,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
   <div class="wrap">
     <div class="top">
       <div>
-        <img class="sig" src="./brand/fav-dot-white.png" alt="" />
+        <img class="sig" src="./brand/fav-dot-white.png" alt="FAV" />
         <div class="vision">From sound <span class="acid">to vision.</span></div>
         <div class="desc">FAV® — Creative Direction &amp; Artist Development Studio</div>
       </div>
@@ -392,7 +417,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
         <h4>Remix Radar</h4>
         <ul>
           <li><a href="./app.html">Open the app</a></li>
-          <li><a href="#trending">Trending now</a></li>
+          <li><a href="#install">Install</a></li>
           <li><a href="#how">How it works</a></li>
           <li><a href="#model">Model</a></li>
         </ul>
@@ -400,8 +425,8 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
       <div>
         <h4>FAV®</h4>
         <ul>
-          <li><a href="#about">Creative Studio</a></li>
-          <li><a href="#about">From sound to vision</a></li>
+          <li><a href="#features">Creative Studio</a></li>
+          <li><a href="#features">From sound to vision</a></li>
           <li><a href="#model">Work with us</a></li>
         </ul>
       </div>
@@ -414,43 +439,27 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acid);outline-offset:
 </footer>
 
 <script>
-var io = new IntersectionObserver(function(es){
-  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-},{threshold:.12, rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 (function(){
   var grid=document.getElementById('trending-grid');
-  fetch('./feed.json?t='+Date.now(),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
-    var dt = d.generated_at ? new Date(d.generated_at) : null;
-    var ds = (dt && !isNaN(dt)) ? dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : null;
-    if(ds){ var fd=document.getElementById('feed-date'); if(fd) fd.textContent=ds; }
-    var ch=d.charts||{};
-    var plat = ch.spotify ? 'spotify' : Object.keys(ch)[0];
+  fetch('./feed.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    var ch=d.charts||{};var plat=ch.spotify?'spotify':Object.keys(ch)[0];
     var pmeta=(d.platforms||[]).filter(function(p){return p.key===plat;})[0];
-    var wins = ch[plat]||{};
-    var win = wins['24h'] ? '24h' : Object.keys(wins)[0];
+    var wins=ch[plat]||{};var win=wins['24h']?'24h':Object.keys(wins)[0];
+    var dt=d.generated_at?new Date(d.generated_at):null;var ds=(dt&&!isNaN(dt))?dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}):null;
     var lbl=document.getElementById('trending-label');
-    if(lbl) lbl.innerHTML=(pmeta?esc(pmeta.label):esc(plat))+' · <b>'+(win==='24h'?'24h growth':esc(win))+'</b> · '+(ds?('updated '+ds):'live');
-    var ids=(wins[win]||[]).slice(0,8);
-    var rows=ids.map(function(id){return d.tracks[id];}).filter(Boolean);
-    if(!rows.length) throw 0;
+    if(lbl)lbl.innerHTML=(pmeta?esc(pmeta.label):esc(plat))+' · <b>'+(win==='24h'?'24h growth':esc(win))+'</b> · '+(ds?('updated '+ds):'live');
+    var ids=(wins[win]||[]).slice(0,8);var rows=ids.map(function(id){return d.tracks[id];}).filter(Boolean);
+    if(!rows.length)throw 0;
     grid.innerHTML=rows.map(function(t,i){
-      var g=Math.round(t[plat+'_24h_pct']||0);
-      var gtxt=(g>0?'+':'')+g+'%';
+      var g=Math.round(t[plat+'_24h_pct']||0);var gtxt=(g>0?'+':'')+g+'%';
       var cover=t.cover_url?(' style="background-image:url(\''+esc(t.cover_url)+'\')"'):'';
-      return '<a class="tr-card reveal" href="./app.html" style="--d:'+(i*55)+'ms">'+
-        '<span class="tr-rank">'+(i+1<10?'0':'')+(i+1)+'</span>'+
-        '<span class="tr-art"'+cover+'></span>'+
-        '<span class="tr-meta"><span class="tr-name">'+esc(t.name)+'</span><span class="tr-art2">'+esc(t.artist||'')+'</span></span>'+
-        '<span class="tr-g'+(g>0?' up':'')+'">'+gtxt+'</span></a>';
+      return '<a class="tr-card reveal" href="./app.html" style="--d:'+(i*55)+'ms"><span class="tr-rank">'+(i+1<10?'0':'')+(i+1)+'</span><span class="tr-art"'+cover+'></span><span class="tr-meta"><span class="tr-name">'+esc(t.name)+'</span><span class="tr-art2">'+esc(t.artist||'')+'</span></span><span class="tr-g'+(g>0?' up':'')+'">'+gtxt+'</span></a>';
     }).join('');
-    grid.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-  }).catch(function(){
-    grid.innerHTML='<div class="tr-fallback">The live radar opens inside the app. <a href="./app.html">Open Remix Radar →</a></div>';
-  });
+    grid.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  }).catch(function(){grid.innerHTML='<div class="tr-fallback">The live radar opens inside the app. <a href="./app.html">Open Remix Radar →</a></div>';});
 })();
 </script>
 </body>
