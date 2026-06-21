@@ -79,6 +79,11 @@
   .seg .lk{opacity:.6;}
 
   /* Search */
+  .gsel{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1px 0;margin:2px 0 0;scrollbar-width:none;}
+  .gsel::-webkit-scrollbar{display:none;}
+  .gchip{flex:none;border:none;background:var(--fill);color:var(--label);font:600 13px/1 var(--font);padding:8px 13px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .gchip.on{background:var(--accent);color:var(--on-accent);}
+  .gchip .gn{font-size:10px;font-weight:700;opacity:.55;}
   .search{display:flex;align-items:center;gap:7px;background:var(--fill);border-radius:10px;padding:8px 11px;}
   .search svg{width:17px;height:17px;color:var(--label2);}
   .search input{flex:1;background:none;border:none;color:var(--label);font-size:16px;outline:none;}
@@ -301,7 +306,7 @@
 <script>
 const BETA=true; // beta build: all premium windows unlocked for testers
 const LS={likes:"rr_likes_v1",playlists:"rr_playlists_v1",feed:"rr_feed_v3",premium:"rr_premium",seen:"rr_seen_welcome"};
-const state={feed:null,view:"radar",platform:"spotify",window:"",currentPlaylist:null,
+const state={feed:null,view:"radar",platform:"spotify",window:"",genre:"all",currentPlaylist:null,
   filter:{q:"",genres:new Set(),labels:new Set(),fresh:false,min:null,max:null},
   playingId:null,openId:null,
   artistsFeed:null,artistPlatform:null,artistWindow:null,artistQ:"",
@@ -359,6 +364,7 @@ function matches(t){const f=state.filter;
   if(f.q){const q=f.q.toLowerCase();if(!((t.name||"").toLowerCase().includes(q)||(t.artist||"").toLowerCase().includes(q)||(t.label||"").toLowerCase().includes(q)))return false;}
   if(f.labels.size&&!f.labels.has(t.label_category))return false;
   if(f.genres.size){const g=(t.genres||[]).map(x=>x.toLowerCase());if(![...f.genres].some(sel=>g.some(x=>x.includes(sel.toLowerCase()))))return false;}
+  if(state.genre&&state.genre!=="all"&&!inGenre(t,state.genre))return false;
   if(f.fresh){const d=parseDate(t.release_date);if(!d||(Date.now()-d.getTime())/86400000>30)return false;}
   if(f.min!=null||f.max!=null){const v=metricValue(t,state.platform,state.window);if(f.min!=null&&v<f.min)return false;if(f.max!=null&&v>f.max)return false;}
   return true;}
@@ -529,7 +535,7 @@ function soundRow(s,rank){const hl=sHeadline(s);
 function renderControls(){
   const c=document.getElementById('controls'),fEl=document.getElementById('filters');
   if(state.view==="radar"&&state.feed){
-    c.innerHTML=platSeg(platforms(),state.platform,"plat")+winSeg(windowsMeta(),state.window,k=>isLocked(k),"win")+searchBox("Search song, artist or label…",state.filter.q)+filtersHTML();
+    c.innerHTML=platSeg(platforms(),state.platform,"plat")+winSeg(windowsMeta(),state.window,k=>isLocked(k),"win")+genreSeg()+searchBox("Search song, artist or label…",state.filter.q)+filtersHTML();
     wireRadarControls(c);return;
   }
   if(state.view==="artists"&&state.artistsFeed){
@@ -544,6 +550,28 @@ function renderControls(){
     wireSearch(c,v=>{state.soundQ=v;renderSounds(document.getElementById('content'));});return;
   }
   c.innerHTML="";
+}
+const GENRE_BUCKETS=[
+  {key:"all",label:"All"},
+  {key:"electronic",label:"Electronic",kw:["edm","electro","house","techno","trance","dubstep","drum and bass","dnb","garage","bass","future bass","hyperpop","dance","club","tech house","deep house","slap house","hardstyle","hardcore","frenchcore","rawstyle","gabber","hard dance","hardtekk","phonk","eurodance","big room","melodic techno"]},
+  {key:"hiphop",label:"Hip-Hop",kw:["hip hop","rap","trap","drill","grime","cloud rap","plugg"]},
+  {key:"pop",label:"Pop",kw:["pop","indie pop","dance pop","synthpop","electropop","art pop","bedroom pop"]},
+  {key:"latin",label:"Latin",kw:["latin","reggaeton","corrido","regional mexican","musica mexicana","banda","cumbia","baile funk","brazilian funk","funk carioca","sertanejo","dembow","salsa"]},
+  {key:"afro",label:"Afro",kw:["afro","amapiano","afrobeats","afropop","naija","gqom"]},
+  {key:"asian",label:"Asia",kw:["k-pop","j-pop","v-pop","vietnam","vietnamese","c-pop","mandopop","cantopop","thai","indo","korean","japanese","anime","city pop"]},
+  {key:"rock",label:"Rock",kw:["rock","metal","punk","emo","grunge","alt-","alternative"]},
+  {key:"rnb",label:"R&B",kw:["r&b","rnb","soul","neo soul","contemporary r&b"]},
+];
+function inGenre(t,key){if(key==="all")return true;const b=GENRE_BUCKETS.find(x=>x.key===key);if(!b||!b.kw)return false;const g=(t.genres||[]).join(" ").toLowerCase();if(!g)return false;return b.kw.some(k=>g.indexOf(k)>=0);}
+function genreSeg(){
+  const ids=chartIds();const tracks=ids.map(id=>state.feed.tracks[id]).filter(Boolean);
+  const avail=GENRE_BUCKETS.filter(b=>b.key==="all"||tracks.some(t=>inGenre(t,b.key)));
+  if(!avail.some(b=>b.key===(state.genre||"all")))state.genre="all";
+  const sel=state.genre||"all";
+  return '<div class="gsel">'+avail.map(b=>{
+    const n=b.key==="all"?tracks.length:tracks.filter(t=>inGenre(t,b.key)).length;
+    return `<button class="gchip ${b.key===sel?'on':''}" data-gen="${b.key}">${esc(b.label)}${b.key!=="all"?` <span class="gn">${n}</span>`:""}</button>`;
+  }).join('')+'</div>';
 }
 function platSeg(arr,sel,attr){return '<div class="seg">'+arr.map(p=>`<button class="${p.key===sel?'on':''}" data-${attr}="${p.key}">${esc(p.label)}<span class="sub2">${esc(p.metric_label)}</span></button>`).join('')+'</div>';}
 function winSeg(arr,sel,lockFn,attr){return '<div class="seg">'+arr.map(w=>`<button class="${w.key===sel?'on':''}" data-${attr}="${w.key}">${esc(wlabel(w))}${lockFn(w.key)?' <span class="lk">'+ic("lock")+'</span>':''}</button>`).join('')+'</div>';}
@@ -561,6 +589,7 @@ function filtersHTML(){
 function wireRadarControls(c){
   c.querySelectorAll('[data-plat]').forEach(el=>el.onclick=()=>{state.platform=el.dataset.plat;window.scrollTo(0,0);render();});
   c.querySelectorAll('[data-win]').forEach(el=>el.onclick=()=>{state.window=el.dataset.win;window.scrollTo(0,0);render();});
+  c.querySelectorAll('[data-gen]').forEach(el=>el.onclick=()=>{state.genre=el.dataset.gen;c.querySelectorAll('[data-gen]').forEach(x=>x.classList.toggle('on',x.dataset.gen===state.genre));renderRadar(document.getElementById('content'));});
   wireSearch(c,v=>{state.filter.q=v;renderRadar(document.getElementById('content'));});
   c.querySelectorAll('[data-label]').forEach(el=>el.onclick=()=>{toggleSet(state.filter.labels,el.dataset.label);el.classList.toggle('on');renderRadar(document.getElementById('content'));});
   c.querySelectorAll('[data-genre]').forEach(el=>el.onclick=()=>{toggleSet(state.filter.genres,el.dataset.genre);el.classList.toggle('on');renderRadar(document.getElementById('content'));});
